@@ -3,6 +3,8 @@ package epam.zlatamigas.customarray.service.impl;
 import epam.zlatamigas.customarray.entity.CustomArray;
 import epam.zlatamigas.customarray.service.CustomArrayChanger;
 
+import java.util.Arrays;
+
 public class CustomArrayChangerImpl implements CustomArrayChanger {
 
     @Override
@@ -13,11 +15,4 @@ public class CustomArrayChangerImpl implements CustomArrayChanger {
             array[i] = -array[i];
         }
     }
-
-    // TODO
-    @Override
-    public void changeSignStream(CustomArray customArray) {
-
-    }
-
 }
