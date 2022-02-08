@@ -3,6 +3,7 @@ package epam.zlatamigas.customarray.reader.impl;
 import epam.zlatamigas.customarray.exception.CustomArrayException;
 import epam.zlatamigas.customarray.reader.CustomArrayReader;
 import epam.zlatamigas.customarray.validator.CustomArrayValidator;
+import epam.zlatamigas.customarray.validator.impl.CustomArrayValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,12 +21,14 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
 
         try (var bufferedReader = new BufferedReader(new FileReader(filePath))) {
 
+            CustomArrayValidator validator = new CustomArrayValidatorImpl();
+
             String str = bufferedReader.readLine();
             if (str == null)
                 return "";
 
             do {
-                if (CustomArrayValidator.validate(str)) {
+                if (validator.validate(str)) {
                     return str;
                 }
 
