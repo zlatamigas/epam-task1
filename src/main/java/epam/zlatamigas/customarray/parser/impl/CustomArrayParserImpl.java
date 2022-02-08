@@ -7,9 +7,9 @@ public class CustomArrayParserImpl implements CustomArrayParser {
     private static final String SPLITERATOR = "\\s";
 
     @Override
-    public int[] parse(String arrayStr) {
+    public int[] parseStrToIntArray(String arrayStr) {
 
-        if (arrayStr.trim().equals(""))
+        if (arrayStr.isBlank())
             return new int[0];
 
         String[] numbersStr = arrayStr.split(SPLITERATOR);

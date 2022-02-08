@@ -1,27 +1,19 @@
 package epam.zlatamigas.customarray.service.impl;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
-import epam.zlatamigas.customarray.exception.CustomArrayException;
 import epam.zlatamigas.customarray.service.CustomArrayFinder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.OptionalInt;
 
 public class CustomArrayFinderImpl implements CustomArrayFinder {
 
-    private static final Logger logger = LogManager.getLogger();
-
-    private static final String EMPTY_ARRAY_EXCEPTION = "Empty CustomArray";
-
     @Override
-    public int findMin(CustomArray customArray) throws CustomArrayException {
+    public OptionalInt findMin(CustomArray customArray) {
 
         int[] array = customArray.getArray();
         if (array.length == 0) {
-            logger.error(EMPTY_ARRAY_EXCEPTION);
-            throw new CustomArrayException(EMPTY_ARRAY_EXCEPTION);
+            return OptionalInt.empty();
         }
 
         int min = array[0];
@@ -31,29 +23,23 @@ public class CustomArrayFinderImpl implements CustomArrayFinder {
             }
         }
 
+        return OptionalInt.of(min);
+    }
+
+    @Override
+    public OptionalInt findMinStream(CustomArray customArray) {
+
+        OptionalInt min = Arrays.stream(customArray.getArray()).min();
+
         return min;
     }
 
     @Override
-    public int findMinStream(CustomArray customArray) throws CustomArrayException {
-
-        OptionalInt min = Arrays.stream(customArray.getArray()).min();
-
-        if (min.isPresent()) {
-            return min.getAsInt();
-        } else {
-            logger.error(EMPTY_ARRAY_EXCEPTION);
-            throw new CustomArrayException(EMPTY_ARRAY_EXCEPTION);
-        }
-    }
-
-    @Override
-    public int findMax(CustomArray customArray) throws CustomArrayException {
+    public OptionalInt findMax(CustomArray customArray) {
 
         int[] array = customArray.getArray();
         if (array.length == 0) {
-            logger.error(EMPTY_ARRAY_EXCEPTION);
-            throw new CustomArrayException(EMPTY_ARRAY_EXCEPTION);
+            return OptionalInt.empty();
         }
 
         int max = array[0];
@@ -62,19 +48,15 @@ public class CustomArrayFinderImpl implements CustomArrayFinder {
                 max = element;
             }
         }
-        return max;
+
+        return OptionalInt.of(max);
     }
 
     @Override
-    public int findMaxStream(CustomArray customArray) throws CustomArrayException {
+    public OptionalInt findMaxStream(CustomArray customArray) {
 
         OptionalInt max = Arrays.stream(customArray.getArray()).max();
 
-        if (max.isPresent()) {
-            return max.getAsInt();
-        } else {
-            logger.error(EMPTY_ARRAY_EXCEPTION);
-            throw new CustomArrayException(EMPTY_ARRAY_EXCEPTION);
-        }
+        return max;
     }
 }

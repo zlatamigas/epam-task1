@@ -14,8 +14,7 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String NO_ARRAY_EXCEPTION_MESSAGE = "No valid array found in ";
-
+    //Redo reading
     @Override
     public String readArrayStrFromFile(String filePath) throws CustomArrayException {
 
@@ -38,7 +37,13 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
             throw new CustomArrayException(e);
         }
 
-        logger.error(NO_ARRAY_EXCEPTION_MESSAGE + filePath);
-        throw new CustomArrayException(NO_ARRAY_EXCEPTION_MESSAGE + filePath);
+        logger.error("No valid array found in " + filePath);
+        throw new CustomArrayException("No valid array found in " + filePath);
+    }
+
+    //TODO
+    @Override
+    public String[] readAllArraysStrFromFile(String filePath) throws CustomArrayException {
+        return new String[0];
     }
 }

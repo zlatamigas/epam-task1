@@ -31,7 +31,7 @@ public class CustomArrayParserImplTest {
 
     @Test(dataProvider = "arraysPr")
     public void testParse(String arrayStr, int[] expected) {
-        int[] actual = arrayParser.parse(arrayStr);
+        int[] actual = arrayParser.parseStrToIntArray(arrayStr);
 
         assertEquals(actual, expected);
     }

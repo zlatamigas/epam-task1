@@ -1,9 +1,11 @@
 package epam.zlatamigas.customarray.service;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
-import epam.zlatamigas.customarray.exception.CustomArrayException;
+
+import java.util.OptionalDouble;
 
 public interface CustomArrayAverager {
-    double average(CustomArray customArray) throws CustomArrayException;
-    double averageStream(CustomArray customArray) throws CustomArrayException;
+    OptionalDouble average(CustomArray customArray);
+
+    OptionalDouble averageStream(CustomArray customArray);
 }

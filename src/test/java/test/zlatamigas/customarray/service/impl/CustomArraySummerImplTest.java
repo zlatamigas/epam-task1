@@ -1,68 +1,48 @@
 package test.zlatamigas.customarray.service.impl;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
-import epam.zlatamigas.customarray.exception.CustomArrayException;
 import epam.zlatamigas.customarray.service.CustomArraySummer;
 import epam.zlatamigas.customarray.service.impl.CustomArraySummerImpl;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.OptionalInt;
+
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 
 public class CustomArraySummerImplTest {
 
     CustomArraySummer arraySummer;
 
-    CustomArray emptyArray;
-    CustomArray filledArray;
-
-    double expectedInFilled;
+    @DataProvider(name = "arrayPr")
+    public Object[][] createData() {
+        return new Object[][]{
+                {new CustomArray(3, 23, -2, 3, 0, 34, -12, 3), OptionalInt.of(52)},
+                {new CustomArray(), OptionalInt.empty()}
+        };
+    }
 
     @BeforeClass
     public void setUp() {
         arraySummer = new CustomArraySummerImpl();
-
-        emptyArray = new CustomArray();
-        filledArray = new CustomArray(3, 23, -2, 3, 0, 34, -12, 3);
-
-        expectedInFilled = 52;
     }
 
 
-    @Test
-    public void testSumNotEmpty() {
+    @Test(dataProvider = "arrayPr")
+    public void testSum(CustomArray customArray, OptionalInt expected) {
 
-        try {
-            double actual = arraySummer.sum(filledArray);
+        OptionalInt actual = arraySummer.sum(customArray);
 
-            assertEquals(actual, expectedInFilled);
-        } catch (CustomArrayException e) {
-            fail(e.getMessage());
-        }
+        assertEquals(actual, expected);
     }
 
-    @Test
-    public void testSumStreamNotEmpty() {
+    @Test(dataProvider = "arrayPr")
+    public void testSumStream(CustomArray customArray, OptionalInt expected) {
 
-        try {
-            double actual = arraySummer.sumStream(filledArray);
+        OptionalInt actual = arraySummer.sumStream(customArray);
 
-            assertEquals(actual, expectedInFilled);
-        } catch (CustomArrayException e) {
-            fail(e.getMessage());
-        }
+        assertEquals(actual, expected);
     }
 
-    @Test(expectedExceptions = CustomArrayException.class)
-    public void testSumEmpty() throws CustomArrayException {
-
-        arraySummer.sum(emptyArray);
-    }
-
-    @Test(expectedExceptions = CustomArrayException.class)
-    public void testSumStreamEmpty() throws CustomArrayException {
-
-        arraySummer.sumStream(emptyArray);
-    }
 }
