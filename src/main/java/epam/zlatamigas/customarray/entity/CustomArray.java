@@ -7,11 +7,15 @@ public class CustomArray {
     private int[] array;
 
     public CustomArray(int... array) {
-        this.array = array;
+        this.array = array.clone();
     }
 
     public int[] getArray() {
-        return array;
+        return array.clone();
+    }
+
+    public void setArray(int... array) {
+        this.array = array.clone();
     }
 
     @Override

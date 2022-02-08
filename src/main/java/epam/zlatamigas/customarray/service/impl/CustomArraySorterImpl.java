@@ -26,6 +26,8 @@ public class CustomArraySorterImpl implements CustomArraySorter {
             n--;
 
         } while (n > 0 && switched);
+
+        customArray.setArray(array);
     }
 
     @Override
@@ -49,6 +51,8 @@ public class CustomArraySorterImpl implements CustomArraySorter {
             array[pos] = array[i];
             array[i] = temp;
         }
+
+        customArray.setArray(array);
     }
 
     @Override
@@ -56,6 +60,8 @@ public class CustomArraySorterImpl implements CustomArraySorter {
 
         int[] array = customArray.getArray();
         mergeSort(array, 0, array.length - 1);
+
+        customArray.setArray(array);
     }
 
     private void merge(int[] array, int left, int middle, int right) {

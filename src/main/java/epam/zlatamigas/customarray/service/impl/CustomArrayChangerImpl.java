@@ -14,5 +14,6 @@ public class CustomArrayChangerImpl implements CustomArrayChanger {
         for (int i = 0; i < array.length; i++) {
             array[i] = -array[i];
         }
+        customArray.setArray(array);
     }
 }

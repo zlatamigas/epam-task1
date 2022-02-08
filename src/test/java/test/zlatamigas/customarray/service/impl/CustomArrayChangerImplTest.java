@@ -28,13 +28,4 @@ public class CustomArrayChangerImplTest {
         assertEquals(actual, expected);
     }
 
-    @Test
-    public void testChangeSignStream() {
-        CustomArray actual = new CustomArray(1, 2, -3, 0 ,5 ,9);
-        arrayChanger.changeSignStream(actual);
-
-        CustomArray expected = new CustomArray(-1, -2, 3, 0 ,-5 ,-9);
-
-        assertEquals(actual, expected);
-    }
 }
