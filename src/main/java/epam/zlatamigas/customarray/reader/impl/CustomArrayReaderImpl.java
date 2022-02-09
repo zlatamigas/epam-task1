@@ -21,7 +21,7 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
 
         try (var bufferedReader = new BufferedReader(new FileReader(filePath))) {
 
-            CustomArrayValidator validator = new CustomArrayValidatorImpl();
+            CustomArrayValidator validator = CustomArrayValidatorImpl.getInstance();
 
             String str = bufferedReader.readLine();
             if (str == null)

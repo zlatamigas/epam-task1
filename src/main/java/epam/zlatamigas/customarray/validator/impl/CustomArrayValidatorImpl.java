@@ -9,6 +9,18 @@ public class CustomArrayValidatorImpl implements CustomArrayValidator {
 
     public static final String REGEX_ARRAY = "^([+-]?\\d+\\s+)*([+-]?\\d+)?$";
 
+    private static CustomArrayValidatorImpl instance = null;
+
+    private CustomArrayValidatorImpl() {}
+
+    public static CustomArrayValidatorImpl getInstance() {
+        if (instance == null) {
+            instance = new CustomArrayValidatorImpl();
+        }
+        return instance;
+    }
+
+
     @Override
     public boolean validate(String arrayStr) {
 
