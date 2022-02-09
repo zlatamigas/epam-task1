@@ -98,9 +98,6 @@ public class CustomArrayReaderImplTest {
 
             String[] actual = arrayReader.readAllArraysStrFromFile(file.getAbsolutePath());
 
-            System.out.println(Arrays.toString(expected));
-            System.out.println(Arrays.toString(actual));
-
             assertEquals(actual, expected);
         } catch (CustomArrayException | URISyntaxException e) {
             fail(e.getMessage());
