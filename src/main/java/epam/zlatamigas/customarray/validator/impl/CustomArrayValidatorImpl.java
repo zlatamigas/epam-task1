@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class CustomArrayValidatorImpl implements CustomArrayValidator {
 
-    public static final String REGEX_ARRAY = "^([+-]?\\d+\\s+)*([+-]?\\d+)?$";
+    public static final String REGEX_ARRAY = "^\\s*(([+-]?\\d+\\s+)*([+-]?\\d+)?)\\s*$";
 
     private static CustomArrayValidatorImpl instance = null;
 

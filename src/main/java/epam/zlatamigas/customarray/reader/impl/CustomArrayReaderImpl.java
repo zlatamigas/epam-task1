@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
     @Override
     public String readArrayStrFromFile(String filePath) throws CustomArrayException {
 
-        try (var bufferedReader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
 
             CustomArrayValidator validator = CustomArrayValidatorImpl.getInstance();
 
@@ -44,9 +45,31 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
         throw new CustomArrayException("No valid array found in " + filePath);
     }
 
-    //TODO
     @Override
     public String[] readAllArraysStrFromFile(String filePath) throws CustomArrayException {
-        return new String[0];
+
+        File file = new File(filePath);
+        if (file.exists() && file.length() == 0) {
+            return new String[]{""};
+        }
+
+        String[] arrayStrs;
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+
+            CustomArrayValidator validator = CustomArrayValidatorImpl.getInstance();
+            arrayStrs = bufferedReader.lines().filter(validator::validate).toArray(String[]::new);
+
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            throw new CustomArrayException(e);
+        }
+
+        if (arrayStrs.length != 0) {
+            return arrayStrs;
+        } else {
+            logger.error("No valid array found in " + filePath);
+            throw new CustomArrayException("No valid array found in " + filePath);
+        }
     }
 }
