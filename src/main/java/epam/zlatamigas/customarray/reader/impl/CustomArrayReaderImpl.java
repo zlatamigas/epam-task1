@@ -16,25 +16,24 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
 
     private static final Logger logger = LogManager.getLogger();
 
-    //Redo reading
     @Override
     public String readArrayStrFromFile(String filePath) throws CustomArrayException {
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+        File file = new File(filePath);
+        if (file.exists() && file.length() == 0) {
+            return "";
+        }
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
 
             CustomArrayValidator validator = CustomArrayValidatorImpl.getInstance();
 
-            String str = bufferedReader.readLine();
-            if (str == null)
-                return "";
-
-            do {
+            String str;
+            while ((str = bufferedReader.readLine()) != null) {
                 if (validator.validate(str)) {
                     return str;
                 }
-
-                str = bufferedReader.readLine();
-            } while (str != null);
+            }
 
         } catch (IOException e) {
             logger.error(e.getMessage());
