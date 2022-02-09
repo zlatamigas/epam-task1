@@ -9,8 +9,9 @@ public class CustomArrayParserImpl implements CustomArrayParser {
     @Override
     public int[] parseStrToIntArray(String arrayStr) {
 
-        if (arrayStr.isBlank())
+        if (arrayStr.isBlank()) {
             return new int[0];
+        }
 
         String[] numbersStr = arrayStr.split(SPLITERATOR);
         int[] numbers = new int[numbersStr.length];
