@@ -9,7 +9,7 @@ public class CustomArrayValidatorImpl implements CustomArrayValidator {
 
     public static final String REGEX_ARRAY = "^\\s*(([+-]?\\d+\\s+)*([+-]?\\d+)?)\\s*$";
 
-    private static CustomArrayValidatorImpl instance = null;
+    private static CustomArrayValidatorImpl instance;
 
     private CustomArrayValidatorImpl() {}
 
@@ -24,9 +24,9 @@ public class CustomArrayValidatorImpl implements CustomArrayValidator {
     @Override
     public boolean validate(String arrayStr) {
 
-        Pattern p = Pattern.compile(REGEX_ARRAY);
-        Matcher m = p.matcher(arrayStr);
+        Pattern pattern = Pattern.compile(REGEX_ARRAY);
+        Matcher matcher = pattern.matcher(arrayStr);
 
-        return m.matches();
+        return matcher.matches();
     }
 }

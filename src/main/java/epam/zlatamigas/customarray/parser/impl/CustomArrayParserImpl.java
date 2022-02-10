@@ -4,7 +4,7 @@ import epam.zlatamigas.customarray.parser.CustomArrayParser;
 
 public class CustomArrayParserImpl implements CustomArrayParser {
 
-    private static final String SPLITERATOR = "\\s";
+    private static final String DELIMITER = "\\s";
 
     @Override
     public int[] parseStrToIntArray(String arrayStr) {
@@ -13,7 +13,7 @@ public class CustomArrayParserImpl implements CustomArrayParser {
             return new int[0];
         }
 
-        String[] numbersStr = arrayStr.split(SPLITERATOR);
+        String[] numbersStr = arrayStr.split(DELIMITER);
         int[] numbers = new int[numbersStr.length];
 
         for (int i = 0; i < numbersStr.length; i++) {

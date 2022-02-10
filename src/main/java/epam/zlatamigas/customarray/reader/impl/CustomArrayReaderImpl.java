@@ -49,7 +49,7 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
 
         File file = new File(filePath);
         if (file.exists() && file.length() == 0) {
-            return new String[]{""};
+            return new String[0];
         }
 
         String[] arrayStrs;
