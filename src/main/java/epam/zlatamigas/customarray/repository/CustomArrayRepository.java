@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class CustomArrayRepository {
 
@@ -37,13 +36,13 @@ public class CustomArrayRepository {
         return items;
     }
 
-    public boolean contains(int arrayId){
+    public boolean contains(int arrayId) {
         return findCustomArrayWithId(arrayId) != null;
     }
 
     public boolean add(CustomArray customArray) {
         int id = customArray.getId();
-        if(findCustomArrayWithId(id)!=null){
+        if (findCustomArrayWithId(id) != null) {
             return false;
         }
         customArray.attach(OBSERVER);
@@ -59,7 +58,7 @@ public class CustomArrayRepository {
 
     public boolean remove(int arrayId) {
         CustomArray customArray = findCustomArrayWithId(arrayId);
-        if(customArray==null){
+        if (customArray == null) {
             return false;
         }
         customArray.detach(OBSERVER);
@@ -101,7 +100,7 @@ public class CustomArrayRepository {
             newCustomArray.attach(OBSERVER);
             newCustomArray.notifyObservers();
             items.add(newCustomArray);
-        }else{
+        } else {
             items.remove(existingCustomArray);
             existingCustomArray.detach(OBSERVER);
             warehouse.remove(existingCustomArray.getId());
@@ -116,20 +115,20 @@ public class CustomArrayRepository {
     }
 
     public List<CustomArray> query(CustomArrayRepositorySpecification specification) {
-        List<CustomArray> list = items.stream().filter(specification::specify).collect(Collectors.toList());
+        List<CustomArray> list = items.stream().filter(specification::specify).toList();
         return list;
     }
 
     public List<CustomArray> query(Predicate<CustomArray> specification) {
-        List<CustomArray> list = items.stream().filter(specification::test).collect(Collectors.toList());
+        List<CustomArray> list = items.stream().filter(specification::test).toList();
         return list;
     }
 
-    public void sort(Comparator<? super CustomArray> comparator){
+    public void sort(Comparator<? super CustomArray> comparator) {
         items.sort(comparator);
     }
 
-    private CustomArray findCustomArrayWithId(int arrayId){
+    private CustomArray findCustomArrayWithId(int arrayId) {
         CustomArray customArray = null;
         for (CustomArray el : items) {
             if (el.getId() == arrayId) {
