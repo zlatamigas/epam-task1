@@ -39,6 +39,7 @@ public class RepositoryAvgSpecification implements CustomArrayRepositorySpecific
             case EQUALS -> avg == valueCompareTo;
             case LESS_OR_EQUALS -> avg <= valueCompareTo;
             case LESS -> avg < valueCompareTo;
+            default -> false;
         };
 
         return result;

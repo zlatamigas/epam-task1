@@ -33,6 +33,7 @@ public class RepositorySumSpecification implements CustomArrayRepositorySpecific
             case EQUALS -> sum == valueCompareTo;
             case LESS_OR_EQUALS -> sum <= valueCompareTo;
             case LESS -> sum < valueCompareTo;
+            default -> false;
         };
 
         return result;

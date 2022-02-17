@@ -38,6 +38,7 @@ public class RepositoryMinSpecification implements CustomArrayRepositorySpecific
             case EQUALS -> min == valueCompareTo;
             case LESS_OR_EQUALS -> min <= valueCompareTo;
             case LESS -> min < valueCompareTo;
+            default -> false;
         };
 
         return result;

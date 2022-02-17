@@ -38,6 +38,7 @@ public class RepositoryMaxSpecification implements CustomArrayRepositorySpecific
             case EQUALS -> max == valueCompareTo;
             case LESS_OR_EQUALS -> max <= valueCompareTo;
             case LESS -> max < valueCompareTo;
+            default -> false;
         };
 
         return result;

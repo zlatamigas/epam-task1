@@ -26,6 +26,7 @@ public class RepositorySizeSpecification implements CustomArrayRepositorySpecifi
             case EQUALS -> sum == valueCompareTo;
             case LESS_OR_EQUALS -> sum <= valueCompareTo;
             case LESS -> sum < valueCompareTo;
+            default -> false;
         };
 
         return result;
