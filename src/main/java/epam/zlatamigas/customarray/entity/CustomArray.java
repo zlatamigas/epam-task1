@@ -64,7 +64,9 @@ public class CustomArray extends AbstractArray implements CustomArrayObservable 
 
     @Override
     public void detach(CustomArrayObserver observer) {
-        observers.remove(observer);
+        if(observer!=null && observers.size()!=0) {
+            observers.remove(observer);
+        }
     }
 
     @Override
