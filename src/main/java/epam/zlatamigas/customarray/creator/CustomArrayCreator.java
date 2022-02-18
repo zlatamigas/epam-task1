@@ -2,15 +2,16 @@ package epam.zlatamigas.customarray.creator;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
 import epam.zlatamigas.customarray.exception.CustomArrayException;
+import epam.zlatamigas.customarray.util.IdGenerator;
 
 import java.util.Random;
 
 public class CustomArrayCreator {
 
-    private static final Random RANDOM = new Random();
+    private static final IdGenerator ID_GENERATOR = IdGenerator.getInstance();
 
     public CustomArray createCustomArray(int... array) {
-        return new CustomArray(RANDOM.nextInt(Integer.MAX_VALUE), array);
+        return new CustomArray(ID_GENERATOR.generateId(), array);
     }
 
     public CustomArray createCustomArrayWithId(int id, int... array) {
@@ -18,7 +19,7 @@ public class CustomArrayCreator {
     }
 
     public CustomArray createEmptyCustomArray() {
-        return new CustomArray(RANDOM.nextInt(Integer.MAX_VALUE));
+        return new CustomArray(ID_GENERATOR.generateId());
     }
 
     public CustomArray createEmptyCustomArrayWithId(int id) {
@@ -30,8 +31,8 @@ public class CustomArrayCreator {
             throw new CustomArrayException("Invalid array size: " + size);
         }
 
-        int id = RANDOM.nextInt(Integer.MAX_VALUE);
-        int[] array = RANDOM.ints(size).toArray();
+        int id = ID_GENERATOR.generateId();
+        int[] array = new Random().ints(size).toArray();
 
         return new CustomArray(id, array);
     }
@@ -41,7 +42,7 @@ public class CustomArrayCreator {
             throw new CustomArrayException("Invalid array size: " + size);
         }
 
-        int[] array = RANDOM.ints(size).toArray();
+        int[] array = new Random().ints(size).toArray();
 
         return new CustomArray(id, array);
     }

@@ -1,22 +1,16 @@
 package epam.zlatamigas.customarray.repository;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
-import epam.zlatamigas.customarray.entity.CustomArrayWarehouse;
 import epam.zlatamigas.customarray.exception.CustomArrayException;
-import epam.zlatamigas.customarray.observer.CustomArrayObserver;
-import epam.zlatamigas.customarray.observer.impl.CustomArrayObserverImpl;
+import epam.zlatamigas.customarray.repository.impl.RepositoryIdEqualsSpecification;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class CustomArrayRepository {
 
-    private static final CustomArrayObserver OBSERVER = new CustomArrayObserverImpl();
-
-    private static CustomArrayWarehouse warehouse = CustomArrayWarehouse.getInstance();
     private static CustomArrayRepository instance;
 
     private List<CustomArray> items;
@@ -37,79 +31,59 @@ public class CustomArrayRepository {
     }
 
     public boolean contains(int arrayId) {
-        return findCustomArrayWithId(arrayId) != null;
+        int size = query(new RepositoryIdEqualsSpecification(arrayId)).size();
+        return size != 0;
     }
 
     public boolean add(CustomArray customArray) {
         int id = customArray.getId();
-        if (findCustomArrayWithId(id) != null) {
+        List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(id));
+
+        if (arraysWithEqualId.size() != 0) {
             return false;
         }
-        customArray.attach(OBSERVER);
-        customArray.notifyObservers();
+
         return items.add(customArray);
     }
 
     public boolean remove(CustomArray customArray) {
-        customArray.detach(OBSERVER);
-        warehouse.remove(customArray.getId());
         return items.remove(customArray);
     }
 
     public boolean remove(int arrayId) {
-        CustomArray customArray = findCustomArrayWithId(arrayId);
-        if (customArray == null) {
+
+        List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(arrayId));
+
+        if (arraysWithEqualId.size() == 0) {
             return false;
         }
-        customArray.detach(OBSERVER);
-        warehouse.remove(customArray.getId());
+
+        CustomArray customArray = arraysWithEqualId.get(0);
         return items.remove(customArray);
     }
 
-    public boolean addAll(Collection<? extends CustomArray> customArrays) {
-        customArrays.forEach(customArray -> {
-            customArray.attach(OBSERVER);
-            customArray.notifyObservers();
-        });
-        return items.addAll(customArrays);
-    }
-
-    public boolean removeAll(Collection<? extends CustomArray> customArrays) {
-        customArrays.forEach(customArray -> {
-            customArray.detach(OBSERVER);
-            warehouse.remove(customArray.getId());
-        });
-        return items.removeAll(customArrays);
-    }
-
     public CustomArray get(int arrayId) throws CustomArrayException {
-        CustomArray customArray = findCustomArrayWithId(arrayId);
-        if (customArray == null) {
+
+        List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(arrayId));
+
+        if (arraysWithEqualId.size() == 0) {
             throw new CustomArrayException("No CustomArray in Repository with id=" + arrayId);
         }
 
-        return customArray;
+        return arraysWithEqualId.get(0);
     }
 
-    public CustomArray set(int arrayId, CustomArray customArray) {
+    public CustomArray set(CustomArray customArray) {
 
-        CustomArray existingCustomArray = findCustomArrayWithId(arrayId);
-        CustomArray newCustomArray;
-        if (existingCustomArray == null) {
-            newCustomArray = new CustomArray(arrayId, existingCustomArray.getArray());
-            newCustomArray.attach(OBSERVER);
-            newCustomArray.notifyObservers();
-            items.add(newCustomArray);
-        } else {
+        List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(customArray.getId()));
+
+        CustomArray existingCustomArray = null;
+        if (arraysWithEqualId.size() != 0) {
+            existingCustomArray = arraysWithEqualId.get(0);
             items.remove(existingCustomArray);
-            existingCustomArray.detach(OBSERVER);
-            warehouse.remove(existingCustomArray.getId());
-
-            newCustomArray = new CustomArray(arrayId, customArray.getArray());
-            newCustomArray.attach(OBSERVER);
-            newCustomArray.notifyObservers();
-            items.add(newCustomArray);
         }
+        items.add(customArray);
+
 
         return existingCustomArray;
     }
@@ -120,21 +94,11 @@ public class CustomArrayRepository {
     }
 
     public List<CustomArray> query(Predicate<CustomArray> specification) {
-        List<CustomArray> list = items.stream().filter(specification::test).toList();
+        List<CustomArray> list = items.stream().filter(specification).toList();
         return list;
     }
 
     public void sort(Comparator<? super CustomArray> comparator) {
         items.sort(comparator);
-    }
-
-    private CustomArray findCustomArrayWithId(int arrayId) {
-        CustomArray customArray = null;
-        for (CustomArray el : items) {
-            if (el.getId() == arrayId) {
-                customArray = el;
-            }
-        }
-        return customArray;
     }
 }
