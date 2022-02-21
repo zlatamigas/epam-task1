@@ -30,16 +30,11 @@ public class CustomArrayRepository {
         return items;
     }
 
-    public boolean contains(int arrayId) {
-        int size = query(new RepositoryIdEqualsSpecification(arrayId)).size();
-        return size != 0;
-    }
-
     public boolean add(CustomArray customArray) {
         int id = customArray.getId();
         List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(id));
 
-        if (arraysWithEqualId.size() != 0) {
+        if (!arraysWithEqualId.isEmpty()) {
             return false;
         }
 
@@ -54,7 +49,7 @@ public class CustomArrayRepository {
 
         List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(arrayId));
 
-        if (arraysWithEqualId.size() == 0) {
+        if (arraysWithEqualId.isEmpty()) {
             return false;
         }
 
@@ -66,7 +61,7 @@ public class CustomArrayRepository {
 
         List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(arrayId));
 
-        if (arraysWithEqualId.size() == 0) {
+        if (arraysWithEqualId.isEmpty()) {
             throw new CustomArrayException("No CustomArray in Repository with id=" + arrayId);
         }
 
@@ -78,7 +73,7 @@ public class CustomArrayRepository {
         List<CustomArray> arraysWithEqualId = query(new RepositoryIdEqualsSpecification(customArray.getId()));
 
         CustomArray existingCustomArray = null;
-        if (arraysWithEqualId.size() != 0) {
+        if (!arraysWithEqualId.isEmpty()) {
             existingCustomArray = arraysWithEqualId.get(0);
             items.remove(existingCustomArray);
         }
