@@ -2,16 +2,12 @@ package epam.zlatamigas.customarray.service.impl;
 
 import epam.zlatamigas.customarray.entity.CustomArray;
 import epam.zlatamigas.customarray.service.CustomArrayCounter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
 public class CustomArrayCounterImpl implements CustomArrayCounter {
-
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public long countPositive(CustomArray customArray) {
@@ -90,7 +86,6 @@ public class CustomArrayCounterImpl implements CustomArrayCounter {
 
         return avg;
     }
-
 
 
     @Override

@@ -24,6 +24,8 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
             return "";
         }
 
+        logger.debug("Reader got access to file: " + filePath);
+
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
 
             CustomArrayValidator validator = CustomArrayValidatorImpl.getInstance();
@@ -35,12 +37,12 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
                 }
             }
 
+            logger.warn("No valid array found in " + filePath);
+
         } catch (IOException e) {
-            logger.error(e.getMessage());
             throw new CustomArrayException(e);
         }
 
-        logger.error("No valid array found in " + filePath);
         throw new CustomArrayException("No valid array found in " + filePath);
     }
 
@@ -52,6 +54,8 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
             return new String[0];
         }
 
+        logger.debug("Reader got access to file: " + filePath);
+
         String[] arrayStrs;
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
@@ -60,14 +64,14 @@ public class CustomArrayReaderImpl implements CustomArrayReader {
             arrayStrs = bufferedReader.lines().filter(validator::validate).toArray(String[]::new);
 
         } catch (IOException e) {
-            logger.error(e.getMessage());
             throw new CustomArrayException(e);
         }
 
         if (arrayStrs.length != 0) {
+            logger.debug("Number of valid arrays read: " + arrayStrs.length);
             return arrayStrs;
         } else {
-            logger.error("No valid array found in " + filePath);
+            logger.warn("No valid arrays found in " + filePath);
             throw new CustomArrayException("No valid array found in " + filePath);
         }
     }

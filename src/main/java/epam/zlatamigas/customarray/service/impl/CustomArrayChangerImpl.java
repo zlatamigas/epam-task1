@@ -3,8 +3,6 @@ package epam.zlatamigas.customarray.service.impl;
 import epam.zlatamigas.customarray.entity.CustomArray;
 import epam.zlatamigas.customarray.service.CustomArrayChanger;
 
-import java.util.Arrays;
-
 public class CustomArrayChangerImpl implements CustomArrayChanger {
 
     @Override

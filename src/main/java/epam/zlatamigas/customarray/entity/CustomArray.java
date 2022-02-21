@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CustomArray extends AbstractArray implements CustomArrayObservable {
 
-    protected int[] array;
+    private int[] array;
 
     private List<CustomArrayObserver> observers = new ArrayList<>();
 

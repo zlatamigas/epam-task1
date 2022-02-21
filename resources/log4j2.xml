@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+
+    <Properties>
+        <property name="LOG_DIR">logs</property>
+        <property name="pattern_file">%d{yyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</property>
+        <property name="pattern_console">%relative %-5level %logger{1} - %msg%n
+        </property>
+    </Properties>
+
     <Appenders>
-        <File name="FileLogger" fileName="logs/filelogger.log" append="false">
-            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%msg%n"/>
+            <PatternLayout pattern="${pattern_console}"/>
         </Console>
+        <File name="ConfigLogger" fileName="${LOG_DIR}/config.log" append="true">
+            <PatternLayout pattern="${pattern_file}"/>
+        </File>
+        <File name="ObserverLogger" fileName="${LOG_DIR}/observer.log" append="true">
+            <PatternLayout pattern="${pattern_file}"/>
+        </File>
+        <File name="ReaderLogger" fileName="${LOG_DIR}/reader.log" append="true">
+            <PatternLayout pattern="${pattern_file}"/>
+        </File>
+
     </Appenders>
     <Loggers>
 
-        <Logger name="epam.zlatamigas.customarray" level="error">
-            <AppenderRef ref="FileLogger"/>
+        <Logger name="epam.zlatamigas.customarray.config" level="debug" additivity="false">
+            <AppenderRef ref="ConfigLogger"/>
         </Logger>
 
-        <Root level="error">
+        <Logger name="epam.zlatamigas.customarray.observer" level="debug" additivity="false">
+            <AppenderRef ref="ObserverLogger"/>
+        </Logger>
+
+        <Logger name="epam.zlatamigas.customarray.reader" level="debug" additivity="false">
+            <AppenderRef ref="ReaderLogger"/>
+        </Logger>
+
+        <Root level="error" additivity="false">
             <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>
