@@ -11,7 +11,8 @@ public class CustomArrayValidatorImpl implements CustomArrayValidator {
 
     private static CustomArrayValidatorImpl instance;
 
-    private CustomArrayValidatorImpl() {}
+    private CustomArrayValidatorImpl() {
+    }
 
     public static CustomArrayValidatorImpl getInstance() {
         if (instance == null) {

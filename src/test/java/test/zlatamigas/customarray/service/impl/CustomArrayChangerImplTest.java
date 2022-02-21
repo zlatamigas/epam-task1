@@ -20,10 +20,10 @@ public class CustomArrayChangerImplTest {
     @Test
     public void testChangeSign() {
 
-        CustomArray actual = new CustomArray(1, 2, -3, 0 ,5 ,9);
+        CustomArray actual = new CustomArray(0, 1, 2, -3, 0 ,5 ,9);
         arrayChanger.changeSign(actual);
 
-        CustomArray expected = new CustomArray(-1, -2, 3, 0 ,-5 ,-9);
+        CustomArray expected = new CustomArray(0, -1, -2, 3, 0 ,-5 ,-9);
 
         assertEquals(actual, expected);
     }

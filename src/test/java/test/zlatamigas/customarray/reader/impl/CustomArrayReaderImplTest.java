@@ -41,7 +41,7 @@ public class CustomArrayReaderImplTest {
     @DataProvider(name = "allArraysFilesPr")
     public Object[][] createDataAllArrays() {
         return new Object[][]{
-                {"0.txt", new String[]{""}},
+                {"0.txt", new String[0]},
                 {"1.txt", new String[]{""}},
                 {"2.txt", new String[]{"+1 -23 3", "4 5 6 6"}},
                 {"3.txt", new String[]{"+01 -23 3"}},
